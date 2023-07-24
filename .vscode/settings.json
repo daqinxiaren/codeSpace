@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "mytree.h": "c",
-        "vector": "cpp",
-        "unordered_map": "cpp"
-    }
-}
