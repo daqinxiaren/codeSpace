@@ -10,6 +10,7 @@ int main()
     for(int i = 1; i < 10; ++i)
         myqueue_pop(f);
     myqueue_print(f);
+    // printf("dadasdas\n");
     myqueue_destory(&f);
     return 0;
 }
