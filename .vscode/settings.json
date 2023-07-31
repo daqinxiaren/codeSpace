@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "ad7606.h": "c"
+        "ad7606.h": "c",
+        "dev_config.h": "c",
+        "net_config_protocol.h": "c"
     }
 }

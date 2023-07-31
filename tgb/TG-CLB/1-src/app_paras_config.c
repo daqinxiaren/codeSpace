@@ -69,6 +69,30 @@ static inline void app_paras_config_broadcast_ack(void)
 {
 //	paras_t *paras = RT_NULL;
 	broadcast_ack_protocol_t broadcast_ack_data;
+	/*
+	typedef struct
+{
+	uint8_t data_head[2];
+	uint8_t data_len[2];
+	uint8_t factory_code;
+	uint8_t device_code;
+	uint8_t reserve[5];
+	uint8_t cmd;
+	uint8_t data_inform[sizeof(broadcast_ack_cmd_t)];
+	uint8_t sun_crc[2];
+}broadcast_ack_protocol_t, *pbroadcast_ack_protocol_t;
+typedef struct
+{
+	uint8_t device_code;
+	uint8_t sn[2];
+	uint8_t local_ip[4];
+	uint8_t mask[4];
+	uint8_t gateway[4];
+	uint8_t port[2];
+	uint8_t train_id;
+	uint8_t reserve[4];
+}broadcast_ack_cmd_t, *pbroadcast_ack_cmd_t; //APP_BROADCAST_ACK_CMD
+	*/
 	
 	memset(&broadcast_ack_data, 0, sizeof(broadcast_ack_protocol_t));
 //	paras = app_paras_get();
@@ -93,6 +117,7 @@ static inline void app_paras_config_broadcast_ack(void)
 	uint16_t sum = sum_check_16((uint8_t *)&broadcast_ack_data, sizeof(broadcast_ack_protocol_t) - 2);
 	broadcast_ack_data.sun_crc[0] = (uint8_t)(sum >> 8);
 	broadcast_ack_data.sun_crc[1] = (uint8_t)(sum);
+
 	app_paras_config_msg_send((uint8_t *)&broadcast_ack_data, sizeof(broadcast_ack_protocol_t));
 }
 
@@ -123,6 +148,7 @@ static inline void app_paras_config_ack(uint8_t state)
 	uint16_t sum = sum_check_16((uint8_t *)&config_ack_protocol, sizeof(config_ack_protocol_t) - 2);
 	config_ack_protocol.sun_crc[0] = (uint8_t)(sum >> 8);
 	config_ack_protocol.sun_crc[1] = (uint8_t)(sum);
+	
 	app_paras_config_msg_send((uint8_t *)&config_ack_protocol, sizeof(config_ack_protocol_t));
 }
 
@@ -232,6 +258,7 @@ void app_paras_config_get_data(uint8_t *data, uint16_t size, struct sockaddr_in 
 			broadcast_cmd = (pbroadcast_cmd_t)net_config_data->data_inform;
 			pconfig_inform_cmd_t config_inform_cmd;
 			config_inform_cmd = (pconfig_inform_cmd_t)net_config_data->data_inform;
+
 			switch(net_config_data->cmd)
 			{
 				case APP_BROADCAST_CMD:

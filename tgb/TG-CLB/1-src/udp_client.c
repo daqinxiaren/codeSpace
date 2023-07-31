@@ -25,6 +25,7 @@
 #include "hdd_save.h"
 #include "can_config.h"
 #include "udp_client.h"
+#include "app_paras_config.h"
 #include "spi_app.h"
 #include "ad7606.h"
 
@@ -316,6 +317,14 @@ void udp_ucast_recv(void *ptr)
 //	my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	memcpy(&my_addr.sin_addr.s_addr,&local_addr.sin_addr.s_addr,sizeof(my_addr.sin_addr.s_addr));
 
+
+	// 允许广播数据
+	const int on = 1;
+	if(setsockopt(inside_send_fd_socket, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0)
+	{
+		rt_kprintf("add broadcast group failed!\n");
+		return ;
+	}
 	int err = bind(recv_sock_fd, (struct sockaddr *)&my_addr, sizeof(my_addr));
 	if (err != 0)
     {
@@ -336,8 +345,10 @@ void udp_ucast_recv(void *ptr)
 				printf("%x ",udp_recv_buff[i]);
 			}
 			printf("\n");
+
 			ucast_recv_msg_deal(udp_recv_buff, r, client_addr);
-			//app_paras_config_get_data(udp_recv_buff, r, client_addr);
+
+			app_paras_config_get_data(udp_recv_buff, r, client_addr);
         }
     }
 }
@@ -551,7 +562,7 @@ int init_udp(void)
 	/*设置本地单播端口*/
 	memset(&local_addr, 0, sizeof(local_addr));         /*初始化IP单播地址为0*/
 	local_addr.sin_family = AF_INET;                                   /*设置协议族类行为AF*/
-	local_addr.sin_addr.s_addr = inet_addr(local_ip); /*设置单播IP地址*/
+	local_addr.sin_addr.s_addr = inet_addr(local_ip); /*设置单播IP地址 192.168.1.14 */
 	local_addr.sin_port = htons(INSIDE_NET_PORT);            /*设置单播端口*/
 
 	/*建立发送套接字*/

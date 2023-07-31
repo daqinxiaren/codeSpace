@@ -46,6 +46,17 @@ extern uint16_t default_tx[2000]; 	//spi发送buffer，为了给从机提供时�
 extern uint16_t default_tx2[2000];  //spi发送buffer，为了给从机提供时钟，必须要有发送数据的动作
 
 struct qzq_config qzqconfig;
+/*
+struct qzq_config
+{
+	uint16_t config_flag;
+	uint16_t src_id;
+	uint16_t tag_id;
+	uint16_t CONFIG_CMD_TYPE;
+	uint16_t CONFIG_OK_TYPE;
+};
+extern struct qzq_config qzqconfig;
+*/
 struct spi_flag_st spi_flag;
 
 int spi_fd = -1;
@@ -155,6 +166,23 @@ static void spi_transfer_data(uint16_t *tx_buf,uint16_t *rx_buf,uint16_t len)
 		.speed_hz = speed,
 		.bits_per_word = bits,
 	};
+	/*
+	struct spi_ioc_transfer{
+		__u64		tx_buf;
+	__u64		rx_buf;
+
+	__u32		len;
+	__u32		speed_hz;
+
+	__u16		delay_usecs;
+	__u8		bits_per_word;
+	__u8		cs_change;
+	__u8		tx_nbits;
+	__u8		rx_nbits;
+	__u8		word_delay_usecs;
+	__u8		pad;}
+	*/
+	// 传输消息到tr结构体
 	ret = ioctl(spi_fd, SPI_IOC_MESSAGE(1), &tr);
 	if (ret < 1)
 	{

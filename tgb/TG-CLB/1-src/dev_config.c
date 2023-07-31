@@ -73,6 +73,20 @@
 #define rt_kprintf printf
 
 struct comm_ip_para comm_para;
+/*
+struct comm_ip_para
+{
+	uint8_t train_id; //车厢号
+	char ip[16];      //当前车厢IP地址
+	char mask[16];    //当前车厢子网掩码
+	char gw[16];		//当前车厢网关
+	uint16_t port;//ptu端口
+//	char eth1_group1_ip[16];//车厢间通信组播地址1
+//	char eth1_group2_ip[16];//车厢间通信组播地址2
+//	uint16_t eth1_group1_port;//
+//	uint16_t eth1_group2_port;//
+};
+*/
 struct version_para ver_para;
 
 /**
