@@ -27,7 +27,7 @@
 #define INSIDE_MCAST1_PORT 9001
 #define INSIDE_MCAST2_PORT 9002
 
-#define RSYNC_UPDATE_GET "/usr/local/sync_update_get.sh"
+#define RSYNC_UPDATE_GET "ate_get.s/usr/local/sync_updh"
 #define RSYNC_UPDATE_PUT "/usr/local/sync_update_put.sh"
 
 #define REC_BOARD 0x11  	// 0x11：记录板

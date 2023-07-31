@@ -170,6 +170,7 @@ void tz_msg_send(struct send_local_st *local)
  * */
 static void ucast_recv_msg_deal(uint8_t *data, int len, struct sockaddr_in client_addr)
 {
+	printf("--------------test1--------------\n");
 	char ip[16];
 	strcpy(ip,inet_ntoa(client_addr.sin_addr));
 	if(strcmp(ip,local_ip)==0)
@@ -183,6 +184,7 @@ static void ucast_recv_msg_deal(uint8_t *data, int len, struct sockaddr_in clien
 	{
 		switch(data[24])
 		{
+			// 更新应用
 		  case APP_UPDATE_CMD:
 			  //同步数据
 			  system(RSYNC_UPDATE_GET);
@@ -287,7 +289,7 @@ static void ucast_recv_msg_deal(uint8_t *data, int len, struct sockaddr_in clien
 
 /**
  * function     :udp_ucast_recv
- * description  :接收单播消息
+ * description  :接收单播消息 内部
  * input        :none
  * output       :none
  * return       :0-ok 非0-err
@@ -310,21 +312,25 @@ void udp_ucast_recv(void *ptr)
 		return;
     }
 
-    /**绑定本地地址 */
-	bzero(&my_addr, sizeof(my_addr));
-	my_addr.sin_family = AF_INET;
-	my_addr.sin_port =local_addr.sin_port;    //单播端口，表示主机接收的udp端口
-//	my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	memcpy(&my_addr.sin_addr.s_addr,&local_addr.sin_addr.s_addr,sizeof(my_addr.sin_addr.s_addr));
-
-
 	// 允许广播数据
 	const int on = 1;
-	if(setsockopt(inside_send_fd_socket, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0)
+	if(setsockopt(recv_sock_fd, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on)) < 0)
 	{
 		rt_kprintf("add broadcast group failed!\n");
 		return ;
 	}
+
+    /**绑定本地地址 */
+	bzero(&my_addr, sizeof(my_addr));
+	my_addr.sin_family = AF_INET;
+	my_addr.sin_addr.s_addr = local_addr.sin_addr.s_addr;
+	
+	my_addr.sin_port = local_addr.sin_port;    //单播端口，表示主机接收的udp端口
+//	my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+	memcpy(&my_addr.sin_addr.s_addr,&local_addr.sin_addr.s_addr,sizeof(my_addr.sin_addr.s_addr));
+
+
+
 	int err = bind(recv_sock_fd, (struct sockaddr *)&my_addr, sizeof(my_addr));
 	if (err != 0)
     {
@@ -344,10 +350,11 @@ void udp_ucast_recv(void *ptr)
 				if (i!=0 && i%20==0) printf("\n");
 				printf("%x ",udp_recv_buff[i]);
 			}
+			
 			printf("\n");
 
 			ucast_recv_msg_deal(udp_recv_buff, r, client_addr);
-
+			
 			app_paras_config_get_data(udp_recv_buff, r, client_addr);
         }
     }

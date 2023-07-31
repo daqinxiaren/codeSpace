@@ -117,6 +117,7 @@ int main(int argc ,char **argv)
 //			    printf("test iir filter  %f + %f\n",testbuff[i],test_result);
 //			}
 //		    printf("\n");
+			DEBUG("\ -----------test---------\n");
 			sleep(5);
 		}
 

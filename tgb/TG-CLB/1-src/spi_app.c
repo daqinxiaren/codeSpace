@@ -203,6 +203,28 @@ uint8_t spi_update_func(uint8_t board_id)
 	uint16_t read_file_data[10000] = {0};
 	int file_fd = -1,ret=0;
 	spi_flag.update_count=0;
+	/*
+定义spi标志结构体
+struct spi_flag_st{
+	uint8_t cur_cmd_type;						//当前命令标志
+	uint8_t update_flag;
+	uint8_t update_count;
+	uint8_t proc1_reset_flag;					//重启采集板标志位
+	uint8_t proc2_reset_flag;					//重启采集板标志位
+	uint8_t spi1_err_reset_flag;				//spi1故障,重启采集板标志位
+	uint8_t spi2_err_reset_flag;				//spi1故障,重启采集板标志位
+	uint8_t spi2_recv_reset_flag;				//spi接收到复位标志位
+	uint8_t spi2_recv_update_flag;			//spi接收到正确升级数据标志位
+	uint8_t spi2_update_over_flag;			//spi接收到升级完成标志位
+	uint8_t spi2_update_start_flag;			//spi开始升级标志位
+	uint8_t spi2_bearing_deal;
+	uint8_t spi1_plougon_deal;
+	uint8_t spi_send_cnt;
+	uint8_t port_finish;
+	uint8_t spi_comm_reset_flag;
+	uint8_t spi_zd_sample_ch;
+};
+*/
 	spi_flag.spi2_recv_reset_flag = 0;									//spi接收到重启消息标志位
 	spi_flag.spi2_recv_update_flag = 0;									//spi接收到正常的升级数据标志位
 	spi_flag.spi2_update_over_flag = 0;									//spi升级完成标志位

@@ -410,18 +410,18 @@ static int write_default_comm_para()
 	memcpy(ip_para.mask,"255.255.0.0",16);
 	memcpy(ip_para.gw,"192.168.1.1",16);
 	ip_para.port=8000;
-//	memcpy(comm_para.ptu_para.ptu_ip,"10.3.1.120",16);
-	//memcpy(comm_para.ptu_para.ptu_ip,"192.168.30.250",16);
-//	memcpy(comm_para.ptu_para.ptu_mask,"255.255.0.0",16);
-//	memcpy(comm_para.ptu_para.ptu_gw,"10.3.1.1",16);
-//	comm_para.ptu_para.ptu_port=9000;
-//	memcpy(comm_para.ptu_para.eth1_group1_ip,"239.255.100.1",16);
-//	memcpy(comm_para.ptu_para.eth1_group2_ip,"239.255.100.2",16);
-//	comm_para.ptu_para.eth1_group1_port=9123;
-//	comm_para.ptu_para.eth1_group2_port=9124;
+	// memcpy(comm_para.ptu_para.ptu_ip,"10.3.1.120",16);
+	// memcpy(comm_para.ptu_para.ptu_ip,"192.168.30.250",16);
+	// memcpy(comm_para.ptu_para.ptu_mask,"255.255.0.0",16);
+	// memcpy(comm_para.ptu_para.ptu_gw,"10.3.1.1",16);
+	// comm_para.ptu_para.ptu_port=9000;
+	// memcpy(comm_para.ptu_para.eth1_group1_ip,"239.255.100.1",16);
+	// memcpy(comm_para.ptu_para.eth1_group2_ip,"239.255.100.2",16);
+	// comm_para.ptu_para.eth1_group1_port=9123;
+	// comm_para.ptu_para.eth1_group2_port=9124;
 
-//	comm_para.br_para.br_enable=1;
-//	memcpy(comm_para.br_para.br_ip,"192.168.1.100",16);
+	// comm_para.br_para.br_enable=1;
+	// memcpy(comm_para.br_para.br_ip,"192.168.1.100",16);
 	if((ini = fopen(COMM_PARA_FILE_PATH, "w"))==NULL) {
 			rt_kprintf("ERROR: open %s failed!\n",COMM_PARA_FILE_PATH);
 			return -1;
